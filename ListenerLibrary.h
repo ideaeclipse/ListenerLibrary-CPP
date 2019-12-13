@@ -7,6 +7,8 @@
 
 #include <unordered_map>
 #include <functional>
+#include <mutex>
+#include <condition_variable>
 
 #include <vector>
 
@@ -28,6 +30,16 @@ private:
      * Counts the number of sub running processes.
      */
     int running_process = 0;
+
+    /**
+     * Mutex for waiting for threads to complete
+     */
+    std::mutex mutex;
+
+    /**
+     * Conditional variable for waiting for threads to complete
+     */
+     std::condition_variable condition_variable;
 
     /**
      * Executes each element of some vector on a separate detached thread to allow for the main thread to continue to run.

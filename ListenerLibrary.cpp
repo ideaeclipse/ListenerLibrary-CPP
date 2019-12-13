@@ -18,6 +18,11 @@ ListenerLibrary<P...>::execute_on_seperate_thread(const Function function,
                                                   const P... params) {
     std::async(function, params...);
     this->running_process -= 1;
+    if (this->running_process == 0) {
+        std::unique_lock<std::mutex> lk(this->mutex);
+        lk.unlock();
+        this->condition_variable.notify_one();
+    }
 }
 
 
@@ -47,8 +52,9 @@ void ListenerLibrary<P...>::notify_listeners(const int caller_id, const P... par
 
 template<typename... P>
 void ListenerLibrary<P...>::wait() {
-    while (this->running_process > 0) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    if (this->running_process > 0) {
+        std::unique_lock<std::mutex> lk(this->mutex);
+        this->condition_variable.wait(lk);
     }
 }
 
