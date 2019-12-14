@@ -30,7 +30,7 @@ private:
     /**
      * Counts the number of sub running processes.
      */
-    int running_process = 0;
+    std::atomic<int> running_process{0};
 
     /**
      * Mutex for waiting for threads to complete
@@ -96,7 +96,7 @@ public:
         if (this->map->count(caller_id) == 1) {
             std::vector<Function> *set = this->map->at(caller_id);
             for (auto x : *set) {
-                std::thread{this->execute_on_seperate_thread, this, x, params...}.detach();
+                std::thread{&ListenerLibrary<P...>::execute_on_seperate_thread, this, x, params...}.detach();
                 this->running_process += 1;
             }
         } else

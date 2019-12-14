@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ListenerLibrary.h"
+#include "ListenerLibrary.hpp"
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
@@ -24,21 +24,21 @@ int main() {
     });
 
 
-    printf("Waiting for nodes with caller_id 0\n");
+    //printf("Waiting for nodes with caller_id 0\n");
 
     listenerLibrary->notify_listeners(0, 0);
 
-    listenerLibrary->wait();
+    //listenerLibrary->wait();
 
-    printf("Finished waiting on nodes with caller_id 0\n");
+    //printf("Finished waiting on nodes with caller_id 0\n");
 
-    printf("Waiting for nodes with caller_id 1\n");
+    //printf("Waiting for nodes with caller_id 1\n");
 
     listenerLibrary->notify_listeners(1, 1);
 
     listenerLibrary->wait();
 
-    printf("Finished waiting on nodes with caller_id 1\n");
+    //printf("Finished waiting on nodes with caller_id 1\n");
 
     delete listenerLibrary;
 
