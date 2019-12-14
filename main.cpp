@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ListenerLibrary.cpp"
+#include "ListenerLibrary.h"
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
