@@ -49,7 +49,7 @@ private:
      * @param params params to pass to the listener
      */
     void execute_on_seperate_thread(const Function function, const P... params) {
-        std::async(function, params...);
+        function(params...);
         this->running_process -= 1;
         if (this->running_process == 0) {
             std::unique_lock<std::mutex> lk(this->mutex);
